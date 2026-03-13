@@ -20,6 +20,4 @@ public class EmployeeEntity {
     private String email;
     private String department;
     private double salary;
-
-
 }
