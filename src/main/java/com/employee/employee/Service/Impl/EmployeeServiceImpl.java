@@ -4,9 +4,11 @@ import com.employee.employee.Entity.EmployeeEntity;
 import com.employee.employee.Repository.EmployeeRepository;
 import com.employee.employee.Service.EmployeeService;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
+
+
 
 @Service
 @RequiredArgsConstructor
@@ -17,5 +19,39 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity createEmployee(EmployeeEntity employee) {
         return employeeRepository.save(employee);
+    }
+
+    @Override
+    public List<EmployeeEntity> getAllEmployee() {
+        return employeeRepository.findAll();
+    }
+
+    @Override
+    public EmployeeEntity getEmployeeId(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    }
+
+    @Override
+    public EmployeeEntity updateEmployee(Long id, EmployeeEntity employee) {
+        return employeeRepository.findById(id)
+                .map(existingEmployee -> {
+                    existingEmployee.setName(employee.getName());
+                    existingEmployee.setEmail(employee.getEmail());
+                    existingEmployee.setDepartment(employee.getDepartment());
+                    existingEmployee.setSalary(employee.getSalary());
+                    return employeeRepository.save(existingEmployee);
+                })
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    }
+
+    @Override
+    public EmployeeEntity deleteEmployee(Long id) {
+        return employeeRepository.findById(id)
+                .map(employee -> {
+                    employeeRepository.delete(employee);
+                    return employee;
+                })
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
     }
 }
