@@ -44,4 +44,14 @@ public class EmployeeServiceImpl implements EmployeeService {
                 })
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
     }
+
+    @Override
+    public EmployeeEntity deleteEmployee(Long id) {
+        return employeeRepository.findById(id)
+                .map(employee -> {
+                    employeeRepository.delete(employee);
+                    return employee;
+                })
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    }
 }

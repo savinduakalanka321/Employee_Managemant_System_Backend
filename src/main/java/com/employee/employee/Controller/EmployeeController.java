@@ -34,4 +34,9 @@ public class EmployeeController {
         return employeeService.updateEmployee(id,employee);
     }
 
+    @DeleteMapping("/delete/{id}")
+    public EmployeeEntity deleteEmployee(@PathVariable Long id){
+        return employeeService.deleteEmployee(id);
+    }
+
 }

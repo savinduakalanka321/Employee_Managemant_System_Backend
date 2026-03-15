@@ -15,4 +15,5 @@ public interface EmployeeService {
 
     EmployeeEntity updateEmployee (Long id , EmployeeEntity employee);
 
+    EmployeeEntity deleteEmployee (Long id);
 }
