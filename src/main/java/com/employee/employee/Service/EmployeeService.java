@@ -11,5 +11,6 @@ public interface EmployeeService {
 
     List<EmployeeEntity> getAllEmployee();
 
+    EmployeeEntity getEmployeeId (Long id);
 
 }

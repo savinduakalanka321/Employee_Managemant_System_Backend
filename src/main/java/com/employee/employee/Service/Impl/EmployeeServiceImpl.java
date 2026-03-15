@@ -23,4 +23,10 @@ public class EmployeeServiceImpl implements EmployeeService {
     public List<EmployeeEntity> getAllEmployee() {
         return employeeRepository.findAll();
     }
+
+    @Override
+    public EmployeeEntity getEmployeeId(Long id) {
+        return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    }
 }
