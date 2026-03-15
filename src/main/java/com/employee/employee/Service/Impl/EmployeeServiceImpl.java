@@ -8,6 +8,8 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 
+
+
 @Service
 @RequiredArgsConstructor
 public class EmployeeServiceImpl implements EmployeeService {
@@ -27,6 +29,19 @@ public class EmployeeServiceImpl implements EmployeeService {
     @Override
     public EmployeeEntity getEmployeeId(Long id) {
         return employeeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Employee not found"));
+    }
+
+    @Override
+    public EmployeeEntity updateEmployee(Long id, EmployeeEntity employee) {
+        return employeeRepository.findById(id)
+                .map(existingEmployee -> {
+                    existingEmployee.setName(employee.getName());
+                    existingEmployee.setEmail(employee.getEmail());
+                    existingEmployee.setDepartment(employee.getDepartment());
+                    existingEmployee.setSalary(employee.getSalary());
+                    return employeeRepository.save(existingEmployee);
+                })
                 .orElseThrow(() -> new RuntimeException("Employee not found"));
     }
 }
